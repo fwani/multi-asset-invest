@@ -1813,7 +1813,7 @@ permission management
 
 확장 데이터
 
-```text
+```tex
 social media sentiment
 alternative data
 satellite data
