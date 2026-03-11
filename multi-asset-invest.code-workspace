@@ -1,0 +1,19 @@
+{
+  "folders": [
+    { "name": "root", "path": "." },
+    { "name": "api", "path": "apps/api" },
+    { "name": "worker", "path": "apps/worker" },
+    { "name": "web", "path": "apps/web" }
+  ],
+  "settings": {
+    "terminal.integrated.env.osx": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "terminal.integrated.env.linux": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "terminal.integrated.env.windows": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+    },
+  }
+}

@@ -1,0 +1,37 @@
+---
+description: Project Development Guidelines
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# multi-asset-invest Development Guidelines
+
+Auto-generated from all feature plans. Last updated: 2026-03-11
+
+## Active Technologies
+- PostgreSQL (주 스토어). Redis (캐시·메시지 큐). (001-multi-asset-invest-spec)
+
+- Python 3.11+ (api, worker), Vue 3 (web) + FastAPI(api), Vue 3 + Pinia/Vue Router(web), 비동기 워커(크롤러·이벤트·시그널 파이프라인) (001-multi-asset-invest-spec)
+
+## Project Structure
+
+```text
+src/
+tests/
+```
+
+## Commands
+
+cd src [ONLY COMMANDS FOR ACTIVE TECHNOLOGIES][ONLY COMMANDS FOR ACTIVE TECHNOLOGIES] pytest [ONLY COMMANDS FOR ACTIVE TECHNOLOGIES][ONLY COMMANDS FOR ACTIVE TECHNOLOGIES] ruff check .
+
+## Code Style
+
+Python 3.11+ (api, worker), Vue 3 (web): Follow standard conventions
+
+## Recent Changes
+- 001-multi-asset-invest-spec: Added Python 3.11+ (api, worker), Vue 3 (web) + FastAPI(api), Vue 3 + Pinia/Vue Router(web), 비동기 워커(크롤러·이벤트·시그널 파이프라인)
+
+- 001-multi-asset-invest-spec: Added Python 3.11+ (api, worker), Vue 3 (web) + FastAPI(api), Vue 3 + Pinia/Vue Router(web), 비동기 워커(크롤러·이벤트·시그널 파이프라인)
+
+<!-- MANUAL ADDITIONS START -->
+<!-- MANUAL ADDITIONS END -->

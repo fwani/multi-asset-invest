@@ -1,1 +1,41 @@
 .git-credentials-fwani
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+.eggs/
+dist/
+build/
+*.manifest
+
+# Node / Vue
+node_modules/
+dist/
+.nuxt/
+.output/
+*.log
+.env
+.env.*
+!.env.example
+
+# IDE / OS
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+.idea/
+# .vscode/settings.json and .cursor rules are committed for interpreter/editor setup
+
+# Test / coverage
+.coverage
+htmlcov/
+.pytest_cache/
+coverage/
+
+# Local
+*.local
