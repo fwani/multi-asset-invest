@@ -14,5 +14,11 @@ class Settings(BaseSettings):
     redis_url: str = "redis://localhost:6380/0"
     log_level: str = "INFO"
 
+    # With multiple crawl workers, use redis to avoid file contention.
+    robots_cache_backend: str = "file"
+    robots_cache_path: str = "data/robots_cache.json"
+
+    crawl_worker_count: int = 2
+
 
 settings = Settings()

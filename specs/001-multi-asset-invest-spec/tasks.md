@@ -88,6 +88,12 @@
 - [x] T025 [US2] Implement asset impact calculation step (rule stub) and save AssetImpact in apps/worker/app/pipelines/impact_calculator.py
 - [x] T026 [US2] Add impacts API client and event detail impacts section in apps/web/src/
 - [x] T027 [US2] Create assets impacts view (자산별 정렬·필터) in apps/web/src/pages/AssetImpacts.vue
+- [x] T027a [P] [US2] Implement AssetService (list, get) and GET /api/v1/assets, GET /api/v1/assets/{id} per contracts/api.md (FR-018) in apps/api/app/services/asset_service.py, apps/api/app/api/assets.py
+- [x] T027b [US2] Add assets API client in apps/web/src/services/api/assets.ts
+- [x] T027c [US2] Create assets list page (지원 자산 목록, 유형별 필터) in apps/web/src/pages/AssetsList.vue
+- [x] T027d [US2] Add asset filter/select to impacts view using assets API (자산 선택 시 해당 자산 영향 조회) in apps/web/src/pages/AssetImpacts.vue
+- [x] T027e [P] [US2] Implement AssetService.create and POST /api/v1/assets (create asset, body: symbol, name, asset_type, currency_id, exchange, sector_id, country_id) in apps/api/src/services/asset_service.py, apps/api/src/api/assets.py
+- [x] T027f [US2] Add asset create API client (createAsset) in apps/web/src/services/api/assets.ts and asset add form/UI (자산 추가 폼) in apps/web/src/pages/AssetsList.vue or dedicated page
 
 **Checkpoint**: US2 완료 — 이벤트·자산 영향 독립 검증 가능
 

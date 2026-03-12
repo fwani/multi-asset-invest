@@ -1,17 +1,5 @@
-"""Sector ontology model."""
+"""Re-export shared Sector."""
 
-from sqlalchemy import String
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from shared.models.sector import Sector
 
-from models.base import Base
-
-
-class Sector(Base):
-    __tablename__ = "sectors"
-
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    code: Mapped[str] = mapped_column(String(32), unique=True, index=True, nullable=False)
-    name: Mapped[str] = mapped_column(String(255), nullable=False)
-    type: Mapped[str | None] = mapped_column(String(32), nullable=True)
-
-    assets = relationship("Asset", back_populates="sector")
+__all__ = ["Sector"]

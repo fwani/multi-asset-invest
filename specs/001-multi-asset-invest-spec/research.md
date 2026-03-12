@@ -6,7 +6,7 @@
 
 ### 1.1 API 서버: Python + FastAPI
 
-- **Decision**: Python 3.11+, FastAPI
+- **Decision**: Python 3.14+, FastAPI
 - **Rationale**: 스펙에서 api를 Python으로 명시. FastAPI는 비동기 지원·자동 OpenAPI·타입 힌트로 API·worker 간 스키마 공유에 유리.
 - **Alternatives considered**: Django REST (무겁고 동기 중심), Flask (비동기·스키마 도구가 추가 작업 필요).
 

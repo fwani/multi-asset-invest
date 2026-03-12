@@ -1,11 +1,5 @@
-"""Minimal Asset model for worker (read assets.id for impact stub)."""
+"""Re-export shared Asset."""
 
-from sqlalchemy.orm import Mapped, mapped_column
+from shared.models.asset import Asset
 
-from models.base import Base
-
-
-class Asset(Base):
-    __tablename__ = "assets"
-
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+__all__ = ["Asset"]

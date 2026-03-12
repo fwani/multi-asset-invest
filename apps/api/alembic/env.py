@@ -1,17 +1,28 @@
 """Alembic environment. Uses DATABASE_URL; sync driver for migrations."""
 
 import os
+import sys
+from pathlib import Path
+
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from alembic import context
 
+# Ensure api src is on path so "models" can be imported
+_src = Path(__file__).resolve().parent.parent / "src"
+if str(_src) not in sys.path:
+    sys.path.insert(0, str(_src))
+
 config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-target_metadata = None
+from models.base import Base
+import models  # noqa: F401 — load all models so metadata is complete
+
+target_metadata = Base.metadata
 
 # Prefer DATABASE_URL; convert async URL to sync for Alembic
 _db_url = os.environ.get("DATABASE_URL", config.get_main_option("sqlalchemy.url"))

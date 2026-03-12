@@ -7,13 +7,13 @@ from models.company import Company
 from models.country import Country
 from models.crawl_source import CrawlSource
 from models.currency import Currency
-from models.event import Event
 from models.news import News
 from models.notification import Notification
 from models.order import Order
 from models.portfolio import Portfolio, Position
 from models.sector import Sector
 from models.signal import Signal
+from models.event import Event
 from models.user import User
 
 __all__ = [

@@ -8,7 +8,7 @@
 ## 사전 요구사항
 
 - **uv** (Python 패키지/가상환경): https://docs.astral.sh/uv/ — `curl -LsSf https://astral.sh/uv/install.sh | sh` 또는 `pip install uv`
-- Python 3.11+ (uv가 자동 관리 가능)
+- Python 3.14+ (uv가 자동 관리 가능)
 - Node.js 18+ (Vue·npm/pnpm)
 - Docker + docker compose (인프라·배포용 권장)
 - 로컬만 쓸 경우: PostgreSQL 14+ 직접 설치 가능

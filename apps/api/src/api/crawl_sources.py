@@ -17,6 +17,7 @@ class CrawlSourceItem(BaseModel):
     base_url: str
     source_name: str
     is_active: bool
+    render_mode: str = "static"
     created_at: datetime
     updated_at: datetime
 
@@ -32,12 +33,14 @@ class CrawlSourceCreate(BaseModel):
     base_url: str
     source_name: str
     is_active: bool = True
+    render_mode: str = "static"
 
 
 class CrawlSourceUpdate(BaseModel):
     base_url: str | None = None
     source_name: str | None = None
     is_active: bool | None = None
+    render_mode: str | None = None
 
 
 @router.get("/crawl-sources", response_model=CrawlSourceListResponse)
@@ -74,6 +77,7 @@ async def create_crawl_source(
         base_url=body.base_url,
         source_name=body.source_name,
         is_active=body.is_active,
+        render_mode=body.render_mode,
     )
     await session.commit()
     return CrawlSourceItem.model_validate(row)
@@ -91,6 +95,7 @@ async def update_crawl_source(
         base_url=body.base_url,
         source_name=body.source_name,
         is_active=body.is_active,
+        render_mode=body.render_mode,
     )
     if row is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Crawl source not found")

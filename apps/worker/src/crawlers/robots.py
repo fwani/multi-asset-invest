@@ -5,10 +5,20 @@ import re
 import urllib.request
 from urllib.parse import urljoin, urlparse
 
+from crawlers.robots_cache import get_backend
+
 logger = logging.getLogger(__name__)
 
-# Origin -> robots.txt body. Process lifetime; no TTL for now.
+# Origin -> robots.txt body. Loaded from backend on init; saved after each update.
 _robots_cache: dict[str, str] = {}
+
+def _init_robots_cache() -> None:
+    global _robots_cache
+    _robots_cache.clear()
+    _robots_cache.update(get_backend().load())
+
+
+_init_robots_cache()
 
 
 def _origin_from_url(url: str) -> str:
@@ -38,10 +48,12 @@ def fetch_robots_txt(base_url: str, timeout: int = 10) -> str:
             body = resp.read().decode("utf-8", errors="replace")
             logger.debug("Fetched robots.txt from %s (%d bytes)", robots_url, len(body))
             _robots_cache[origin] = body
+            get_backend().save(_robots_cache)
             return body
     except Exception as e:
         logger.warning("Failed to fetch robots.txt from %s: %s", robots_url, e)
         _robots_cache[origin] = ""
+        get_backend().save(_robots_cache)
         return ""
 
 

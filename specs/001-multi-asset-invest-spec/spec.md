@@ -217,6 +217,32 @@
 - 데이터 보존 기간·개인정보 처리 정책은 법·규정 및 서비스 정책에 따르며, 스펙에서는 "저장·조회 가능" 수준만 요구한다.
 - 고빈도 트레이딩·완전 자동 투자(사용자 승인 없이 자동 주문)·초저지연 인프라·자체 브로커 구축은 비목표로, 본 스펙 범위에 포함하지 않는다.
 
+## 데이터 수집·크롤러 구현 스펙 (현재)
+
+### 실데이터 크롤링
+
+- **흐름**: CrawlSource별 base_url 페이지를 fetch → 본문에서 링크 추출 → 호스트별 robots.txt로 허용된 URL만 필터 → 각 허용 URL을 fetch → HTML에서 title/body/published_at 추출 → 파이프라인에 동일 형식(source, url, title, body, published_at, type, metadata)으로 전달.
+- **추출**: BeautifulSoup(bs4) 사용. 제목은 `<title>` 또는 og:title 메타, 본문은 article → main → [role=main] → body 순으로 컨테이너 선택 후 텍스트, 발행일은 article:published_time·time datetime·itemprop=datePublished 등에서 ISO 문자열로 파싱. 본문 길이 상한(예: 50_000자) 적용.
+- **정적 vs JS(render_mode)**: CrawlSource에 `render_mode` 컬럼(`static` | `browser`). `static`은 urllib로 HTML만 가져와 추출, `browser`는 Playwright로 페이지 로드·본문 노드 대기 후 HTML 수집하여 동일 추출 함수 적용. 브라우저는 프로세스당 1개 재사용.
+
+### robots.txt 및 캐시
+
+- **호스트별 적용**: 추출된 링크의 origin(스킴+netloc)별로 해당 호스트의 robots.txt를 사용해 can_fetch 검사. 다른 호스트는 해당 호스트 robots.txt를 별도 조회.
+- **캐시 영속화**: robots.txt 조회 결과는 origin → 본문으로 메모리 캐시하며, **재시작 후 복원**을 위해 백엔드에 저장한다. 백엔드: `file`(JSON 파일, 기본) 또는 `redis`. 설정: `WORKER_ROBOTS_CACHE_BACKEND`, `WORKER_ROBOTS_CACHE_PATH`. 파일 백엔드는 atomic write(임시 파일 + replace). Redis 백엔드는 키 `multi_asset_invest:robots:{origin}`, TTL(예: 24h) 선택.
+
+### 크롤링 안전장치
+
+- **요청 전 지연**: robots.txt 조회 직후, 페이지 fetch 전에 Crawl-delay(파싱) 또는 기본 1초 sleep. 상한 60초.
+- **429/503**: _fetch_page에서 해당 응답 시 로그·대기(60초) 후 1회 재시도. 재시도 실패 시 빈 문자열.
+- **소스 간 지연**: run_crawl_and_extract에서 활성 소스가 여러 개일 때 각 crawl_one_source 호출 사이에 asyncio.sleep(1초).
+- **링크 URL fetch 간**: 동일 origin 연속 요청 시 기본 지연 적용. 캐시 미스로 다른 호스트 robots fetch 시에도 지연 적용.
+
+### CrawlSource 모델
+
+- **API/Worker 공용**: base_url, source_name, is_active, **render_mode**(기본 `static`). API에서 CRUD·마이그레이션으로 render_mode 추가. Worker는 활성 소스 조회 시 render_mode까지 select하여 crawl_one_source에 전달.
+
+---
+
 ## 구현 구조 및 기술 스택
 
 프로젝트는 **모노레포 3-tier 구조**로 구성한다.

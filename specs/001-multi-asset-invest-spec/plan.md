@@ -13,7 +13,7 @@
 
 ## Technical Context
 
-**Language/Version**: Python 3.11+ (api, worker), Vue 3 (web)  
+**Language/Version**: Python 3.14+ (api, worker), Vue 3 (web)  
 **Primary Dependencies**: FastAPI(api), Vue 3 + Pinia/Vue Router(web), 비동기 워커(크롤러·이벤트·시그널 파이프라인)  
 **Storage**: PostgreSQL (주 스토어). Redis (캐시·메시지 큐).  
 **Testing**: pytest (api, worker), Vitest/Vue Test Utils (web), 통합·계약 테스트  

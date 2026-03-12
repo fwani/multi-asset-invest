@@ -41,11 +41,13 @@ class CrawlSourceService:
         base_url: str,
         source_name: str,
         is_active: bool = True,
+        render_mode: str = "static",
     ) -> CrawlSource:
         row = CrawlSource(
             base_url=base_url,
             source_name=source_name,
             is_active=is_active,
+            render_mode=render_mode,
         )
         self._session.add(row)
         await self._session.flush()
@@ -59,6 +61,7 @@ class CrawlSourceService:
         base_url: str | None = None,
         source_name: str | None = None,
         is_active: bool | None = None,
+        render_mode: str | None = None,
     ) -> CrawlSource | None:
         row = await self.get(id)
         if row is None:
@@ -69,6 +72,8 @@ class CrawlSourceService:
             row.source_name = source_name
         if is_active is not None:
             row.is_active = is_active
+        if render_mode is not None:
+            row.render_mode = render_mode
         await self._session.flush()
         await self._session.refresh(row)
         return row

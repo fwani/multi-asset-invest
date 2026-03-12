@@ -6,14 +6,18 @@
 const BASE = import.meta.env.VITE_API_BASE_URL ?? '/api/v1'
 
 export interface WorkerTriggerRequest {
-  job_type?: 'crawl_and_extract' | 'event_created'
+  job_type?: 'crawl_and_extract' | 'event_created' | 'recalc_impacts'
   event_id?: number
+  from_date?: string
+  to_date?: string
+  limit?: number
 }
 
 export interface WorkerTriggerResponse {
   ok: boolean
   job_type: string
   message: string
+  enqueued_count?: number
 }
 
 export async function triggerWorker (body?: WorkerTriggerRequest): Promise<WorkerTriggerResponse> {
